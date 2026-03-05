@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Test Hotel Miami Beach</title>
+  <meta name="description" content="Contact Test Hotel at 1234 Ocean Drive, Miami Beach, FL 33139. Call (305) 555-0199 or send us a message." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Test Hotel",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1234 Ocean Drive",
+      "addressLocality": "Miami Beach",
+      "addressRegion": "FL",
+      "postalCode": "33139",
+      "addressCountry": "US"
+    },
+    "telephone": "+1-305-555-0199",
+    "url": "https://www.testhotel.com",
+    "email": "info@testhotel.com"
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Test Hotel</a>
+      <a href="/rooms.html">Rooms</a>
+      <a href="/amenities.html">Amenities</a>
+      <a href="/about.html">About Us</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="contact-info">
+      <h1>Contact Test Hotel</h1>
+
+      <div class="info-block">
+        <h2>Address</h2>
+        <address>
+          Test Hotel<br />
+          1234 Ocean Drive<br />
+          Miami Beach, FL 33139<br />
+          United States
+        </address>
+      </div>
+
+      <div class="info-block">
+        <h2>Phone</h2>
+        <p><a href="tel:+13055550199">(305) 555-0199</a></p>
+        <p>Reservations: <a href="tel:+13055550100">(305) 555-0100</a></p>
+        <p>Front Desk available 24/7</p>
+      </div>
+
+      <div class="info-block">
+        <h2>Email</h2>
+        <p><a href="mailto:info@testhotel.com">info@testhotel.com</a></p>
+        <p><a href="mailto:reservations@testhotel.com">reservations@testhotel.com</a></p>
+      </div>
+
+      <div class="info-block">
+        <h2>Hours</h2>
+        <p>Check-in: 3:00 PM | Check-out: 11:00 AM</p>
+        <p>Front Desk: Open 24 hours</p>
+        <p>Restaurant (Horizon): 7:00 AM – 11:00 PM daily</p>
+        <p>Spa: 9:00 AM – 8:00 PM daily</p>
+      </div>
+    </section>
+
+    <section id="directions">
+      <h2>Getting Here</h2>
+      <p>Test Hotel is located on the iconic Ocean Drive in the heart of Miami Beach's Art Deco Historic District.</p>
+      <ul>
+        <li><strong>From Miami International Airport:</strong> Take I-195 East to Miami Beach. Follow Collins Avenue south to 12th Street, turn right to Ocean Drive. Approximately 25 minutes.</li>
+        <li><strong>By Bus:</strong> Miami-Dade Transit Route 119 stops one block from the hotel on Collins Avenue.</li>
+        <li><strong>Parking:</strong> Valet parking available at $35/night. Public garage at 12th Street and Collins Avenue.</li>
+      </ul>
+      <div id="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592!2d-80.13!3d25.78!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDQ2JzQ4LjAiTiA4MMKwMDcnNDguMCJX!5e0!3m2!1sen!2sus!4v1234567890"
+          width="100%"
+          height="400"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          title="Test Hotel location on Google Maps">
+        </iframe>
+      </div>
+    </section>
+
+    <section id="contact-form">
+      <h2>Send Us a Message</h2>
+      <form id="contactForm" action="/api/contact" method="POST">
+        <div>
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Jane Smith" />
+        </div>
+        <div>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" />
+        </div>
+        <div>
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject">
+            <option value="reservation">Reservation Inquiry</option>
+            <option value="event">Event &amp; Venue</option>
+            <option value="feedback">Feedback</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Tell us how we can help..."></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>Test Hotel | 1234 Ocean Drive, Miami Beach, FL 33139 | (305) 555-0199</p>
+    <p>&copy; 2025 Test Hotel. All rights reserved.</p>
+  </footer>
+
+  <script src="/main.js"></script>
+</body>
+</html>
