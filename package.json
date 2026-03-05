@@ -14,6 +14,7 @@
     "axios": "^1.13.6",
     "cheerio": "^1.2.0",
     "next": "16.1.6",
+    "puppeteer": "^24.38.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "robots-parser": "^3.0.1"
