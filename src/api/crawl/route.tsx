@@ -125,18 +125,13 @@ export async function POST(request: Request) {
                         const markdown = htmlToMarkdown(html, url, title)
 
                         const storagePath = urlToStoragePath(url, cid)
+                        const bucket = process.env.SUPABASE_BUCKET!
                         const { error: uploadError } = await supabase.storage
-                            .from('Markdown')
+                            .from(bucket)
                             .upload(storagePath, markdown, {
                                 contentType: 'text/markdown; charset=utf-8',
                                 upsert: true,
                             })
-
-                        if (uploadError) {
-                            console.error(`[storage] ${url} →`, uploadError.message)
-                        } else {
-                            console.log(`[${visited.size}] ${url} — "${title}" → Markdown/${storagePath}`)
-                        }
 
                         controller.enqueue(
                             send({
@@ -146,6 +141,7 @@ export async function POST(request: Request) {
                                 queued: queue.length,
                                 stored: !uploadError,
                                 storagePath: uploadError ? null : storagePath,
+                                uploadError: uploadError?.message ?? null,
                             })
                         )
 
