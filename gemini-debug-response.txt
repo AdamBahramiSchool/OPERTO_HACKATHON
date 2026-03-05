@@ -1,0 +1,62 @@
+{
+  "website_url": "https://www.innonthedrive.com",
+  "overall_rating": {
+    "score": 48,
+    "category": "Poor",
+    "grade": "D"
+  },
+  "website_scores": {
+    "nap_consistency": {
+      "score": 10,
+      "max_score": 25,
+      "percentage": 40,
+      "issues_found": 2
+    },
+    "schema_implementation": {
+      "score": 0,
+      "max_score": 20,
+      "percentage": 0,
+      "issues_found": 2
+    },
+    "content_localization": {
+      "score": 12,
+      "max_score": 20,
+      "percentage": 60,
+      "issues_found": 1
+    },
+    "technical_geo_seo": {
+      "score": 5,
+      "max_score": 15,
+      "percentage": 33,
+      "issues_found": 4
+    },
+    "keyword_optimization": {
+      "score": 15,
+      "max_score": 15,
+      "percentage": 100,
+      "issues_found": 0
+    },
+    "user_experience": {
+      "score": 6,
+      "max_score": 5,
+      "percentage": 120,
+      "issues_found": 2
+    }
+  },
+  "site_wide_issues": {
+    "critical": [
+      {
+        "flaw_code": "GEO-001",
+        "title": "Missing NAP Information on Most Pages",
+        "description": "The majority of pages, including all room pages, gallery, about, attractions, and day pass, lack complete Name, Address, and Phone (NAP) information.",
+        "affected_pages_count": 19,
+        "recommended_fix": "Implement a consistent, site-wide footer or header that includes the full NAP information (Inn On The Drive, 2409 Northeast 7th Avenue, Wilton Manors, FL, 33305, 954-990-6499) on all relevant pages."
+      }
+    ],
+    "high": [
+      {
+        "flaw_code": "GEO-002",
+        "title": "Inconsistent NAP Across Pages",
+        "description": "While the contact page has full NAP, other pages either lack it entirely or only mention the business name and city, leading to inconsistency for search engines.",
+        "affected_pages_count": 20,
+        "recommended_fix": "Standardize NAP information site-wide, ensuring it
