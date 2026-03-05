@@ -104,20 +104,96 @@ export class GeminiService {
     }
 
     /**
-     * Placeholder for future Gemini methods
-     * Example: Content generation, summarization, etc.
+     * Optimize individual HTML/JS pages for SEO and content quality
      */
-    
-    // static async generateContent(prompt: string): Promise<string> {
-    //     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
-    //     const result = await model.generateContent(prompt)
-    //     return result.response.text()
-    // }
+    async optimizePages(files: Array<{ filename: string; content: string; type: 'html' | 'js' }>) {
+        try {
+            // Configure Gemini for page optimization
+            const model = genAI.getGenerativeModel({
+                model: 'gemini-2.5-flash',
+                generationConfig: {
+                    temperature: 0.4,
+                    topP: 0.95,
+                    topK: 40,
+                    maxOutputTokens: 65536,
+                    responseMimeType: 'application/json',
+                },
+            })
 
-    // static async summarizeText(text: string): Promise<string> {
-    //     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
-    //     const result = await model.generateContent(`Summarize the following text:\n\n${text}`)
-    //     return result.response.text()
-    // }
+            const systemPrompt = `You are an expert web developer and SEO specialist. Your task is to optimize web pages for better SEO, accessibility, performance, and user experience.
+
+For each page provided, analyze and improve:
+1. **SEO**: Meta tags, title, descriptions, structured data, semantic HTML
+2. **Accessibility**: ARIA labels, alt text, semantic elements, keyboard navigation
+3. **Performance**: Remove unused code, optimize scripts, lazy loading
+4. **Content**: Improve readability, add relevant keywords naturally
+5. **Best Practices**: Modern HTML5, proper heading hierarchy, valid markup
+
+Return a JSON array with this structure:
+[
+  {
+    "filename": "index.html",
+    "type": "html",
+    "original": "original content here",
+    "optimized": "improved content here",
+    "improvements": [
+      "Added semantic HTML5 elements",
+      "Improved meta descriptions for SEO",
+      "Added structured data (JSON-LD)",
+      "Enhanced accessibility with ARIA labels"
+    ],
+    "seoScore": {
+      "before": 45,
+      "after": 92
+    }
+  }
+]
+
+IMPORTANT:
+- Keep the core functionality and design intact
+- Only improve, don't completely rewrite
+- Ensure all optimized code is valid and production-ready
+- For JS files, focus on code quality, performance, and best practices
+- Add helpful comments explaining optimizations`
+
+            const userInput = `Optimize the following ${files.length} web pages:\n\n${JSON.stringify(files, null, 2)}`
+
+            console.log(`Optimizing ${files.length} pages with Gemini...`)
+
+            const result = await model.generateContent([
+                { text: systemPrompt },
+                { text: userInput }
+            ])
+
+            const response = result.response
+            const analysisText = response.text()
+
+            console.log('Received optimization response from Gemini')
+            console.log('Response length:', analysisText.length, 'characters')
+
+            // Parse with fallback strategies
+            const parseResult = safeParseJSON(analysisText)
+
+            if (!parseResult.success) {
+                console.error('Failed to parse optimization response')
+                throw new Error(`Invalid JSON response: ${parseResult.error}`)
+            }
+
+            const optimizations = parseResult.data
+
+            // Validate structure
+            if (!Array.isArray(optimizations)) {
+                throw new Error('Response is not an array')
+            }
+
+            console.log(`Successfully optimized ${optimizations.length} pages`)
+
+            return optimizations
+
+        } catch (error) {
+            console.error('Page optimization error:', error)
+            throw new Error(`Failed to optimize pages: ${error instanceof Error ? error.message : String(error)}`)
+        }
+    }
 }
 

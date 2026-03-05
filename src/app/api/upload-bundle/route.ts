@@ -33,6 +33,7 @@ export async function POST(request: Request) {
         let totalFiles = 0
 
         const markdownContent: string[] = []
+        const extractedFiles: Array<{ filename: string; content: string; type: 'html' | 'js' }> = []
         markdownContent.push('# Uploaded Build Bundle\n')
         markdownContent.push(`**Upload Date:** ${new Date().toISOString()}\n`)
         markdownContent.push(`**CID:** ${cid}\n`)
@@ -62,6 +63,13 @@ export async function POST(request: Request) {
                     markdownContent.push(extractedText.substring(0, 5000)) // Limit to 5000 chars per file
                     markdownContent.push('\n```\n\n')
                     markdownContent.push('---\n\n')
+
+                    // Store for optimization
+                    extractedFiles.push({
+                        filename,
+                        content: content.substring(0, 10000), // Limit for AI processing
+                        type: 'html'
+                    })
                 }
                 // Process JS files
                 else if (filename.endsWith('.js') || filename.endsWith('.jsx') || filename.endsWith('.ts') || filename.endsWith('.tsx')) {
@@ -75,6 +83,15 @@ export async function POST(request: Request) {
                         markdownContent.push(readableStrings.join('\n').substring(0, 3000)) // Limit to 3000 chars
                         markdownContent.push('\n```\n\n')
                         markdownContent.push('---\n\n')
+                    }
+
+                    // Store for optimization (only .js files, not TypeScript)
+                    if (filename.endsWith('.js') || filename.endsWith('.jsx')) {
+                        extractedFiles.push({
+                            filename,
+                            content: content.substring(0, 8000), // Limit for AI processing
+                            type: 'js'
+                        })
                     }
                 }
                 // Process special files
@@ -141,6 +158,7 @@ export async function POST(request: Request) {
                 otherFiles,
             },
             bundleSize: finalMarkdown.length,
+            files: extractedFiles, // Return files for optimization
         })
 
     } catch (error) {
