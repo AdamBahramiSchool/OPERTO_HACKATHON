@@ -15,6 +15,7 @@ interface CrawlResult {
 export default function CrawlerPage() {
   const [url, setUrl] = useState("");
   const [cid, setCid] = useState("");
+  const [userId, setUserId] = useState("");
   const [crawling, setCrawling] = useState(false);
   const [results, setResults] = useState<CrawlResult[]>([]);
   const [totalPages, setTotalPages] = useState(0);
@@ -27,6 +28,7 @@ export default function CrawlerPage() {
         // Generate CID from user ID (first 8 characters)
         const generatedCid = `CID-${user.id.substring(0, 8).toUpperCase()}`;
         setCid(generatedCid);
+        setUserId(user.id);
       }
     };
 
@@ -34,7 +36,7 @@ export default function CrawlerPage() {
   }, []);
 
   const handleCrawl = async () => {
-    if (!url) return;
+    if (!url || !userId) return;
 
     setCrawling(true);
     setResults([]);
@@ -44,8 +46,17 @@ export default function CrawlerPage() {
       const response = await fetch("/api/crawl", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ seed_url: url }),
+        body: JSON.stringify({ seed_url: url, user_id: userId }),
+        credentials: "include", // Ensure cookies are sent
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Crawl API error:", errorData);
+        alert(`Error: ${errorData.error}\n${errorData.details || ''}\n${errorData.hint || ''}`);
+        setCrawling(false);
+        return;
+      }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
