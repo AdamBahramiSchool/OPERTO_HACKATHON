@@ -1,8 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Operto Insights — Hotel Intelligence Platform
+
+AI-powered SEO analysis and insights platform specifically designed for hotels.
+
+## Features
+
+- 🔍 **Website Crawler**: Automated crawling of hotel websites
+- 🤖 **AI-Powered SEO Analysis**: Gemini AI integration for comprehensive SEO insights
+- 📊 **Normalized Metrics**: Structured scoring across multiple dimensions
+- 🎯 **Actionable Suggestions**: Prioritized recommendations with estimated impact
+- 📈 **Dashboard**: Beautiful glassmorphic UI for data visualization
+- 🔐 **Authentication**: Supabase-powered user management
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **AI**: Google Gemini 1.5 Flash
+- **UI**: React 19, Tailwind CSS v4
+- **Auth & Storage**: Supabase
+- **Crawling**: Puppeteer, Cheerio
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure Environment Variables
+
+Copy `.env.local.example` to `.env.local` and fill in your credentials:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Required variables:
+- `GEMINI_API_KEY`: Get from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- Supabase credentials (URL, keys, bucket name)
+
+See [GEMINI_SETUP.md](./GEMINI_SETUP.md) for detailed setup instructions.
+
+### 3. Run the Development Server
 
 ```bash
 npm run dev
@@ -16,9 +55,48 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Dashboard
+
+1. **Sign Up / Login**: Create an account or sign in
+2. **SEO Analysis**: Navigate to Dashboard > SEO Analysis
+3. **Enter URL**: Input your hotel website URL
+4. **Analyze**: Click "Analyze Website" to start crawling and AI analysis
+5. **View Results**: See scores, issues, and actionable suggestions
+
+### API Endpoints
+
+#### POST `/api/crawl`
+Crawls a website and returns page data via Server-Sent Events.
+
+#### POST `/api/analyze`
+Analyzes page data with Gemini AI and returns normalized SEO metrics.
+
+See [GEMINI_SETUP.md](./GEMINI_SETUP.md) for detailed API documentation.
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── crawl/          # Website crawler endpoint
+│   │   ├── analyze/        # Gemini AI analysis endpoint
+│   │   └── health-check/   # Health check endpoint
+│   ├── dashboard/
+│   │   ├── analysis/       # SEO analysis page
+│   │   ├── crawler/        # Crawler page
+│   │   └── data/           # Hotel data & context page
+│   └── signup/             # Authentication pages
+├── components/
+│   └── DashboardLayout.tsx # Main dashboard layout
+├── lib/
+│   ├── gemini-client.ts    # Client utilities for Gemini API
+│   └── supabase.js         # Supabase client
+└── types/
+    └── seo-analysis.ts     # TypeScript types for SEO analysis
+```
 
 ## Learn More
 

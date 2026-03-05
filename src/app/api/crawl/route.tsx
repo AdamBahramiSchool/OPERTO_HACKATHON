@@ -115,8 +115,10 @@ export async function POST(request: Request) {
                         const title = await page.title()
                         const html = await page.content()
 
+                        // Convert HTML to Markdown for storage
                         const markdown = htmlToMarkdown(html, url, title)
 
+                        // Upload to Supabase storage
                         const storagePath = urlToStoragePath(url, cid)
                         const bucket = process.env.SUPABASE_BUCKET!
                         const { error: uploadError } = await supabase.storage
@@ -132,10 +134,12 @@ export async function POST(request: Request) {
                             console.log(`✓ Uploaded: ${storagePath}`)
                         }
 
+                        // Stream result to client with both storage info AND content for Gemini analysis
                         controller.enqueue(
                             send({
                                 url,
                                 title,
+                                content: html, // Include HTML content for Gemini analysis
                                 index: visited.size,
                                 queued: queue.length,
                                 stored: !uploadError,
