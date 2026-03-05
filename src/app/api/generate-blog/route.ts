@@ -96,6 +96,15 @@ export async function POST(request: Request) {
 
     console.log(`Found ${allMarkdownFiles.length} markdown files`);
 
+    // Just return available pages without generating ideas
+    if (action === "pages") {
+      return NextResponse.json({
+        success: true,
+        availablePages: allMarkdownFiles.map(f => ({ url: f.url, path: f.path })),
+        totalPages: allMarkdownFiles.length
+      });
+    }
+
     if (action === "ideas") {
       // Generate blog ideas from all pages - combine all content
       const allContent = allMarkdownFiles
