@@ -26,10 +26,14 @@ export async function POST(request: Request) {
                         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 })
 
                         const title = await page.title()
+
+                        // Extract HTML content
+                        const content = await page.content()
+
                         console.log(`[${visited.size}] ${url} — "${title}"`)
 
                         // stream this page result to the client immediately
-                        controller.enqueue(send({ url, title, index: visited.size, queued: queue.length }))
+                        controller.enqueue(send({ url, title, content, index: visited.size, queued: queue.length }))
 
                         const links = await page.$$eval('a[href]', (anchors) =>
                             anchors.map((a) => (a as HTMLAnchorElement).href)
